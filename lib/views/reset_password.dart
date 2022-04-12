@@ -100,7 +100,7 @@ class _ResetState extends State<Reset> {
               Container(
                 width: width,
                 height: height*0.45,
-                child: Image.asset('assets/image/signup.png',fit: BoxFit.fill,),
+                child: Image.asset('assets/image/reset.png',fit: BoxFit.fill,),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -117,7 +117,7 @@ class _ResetState extends State<Reset> {
                 child: TextField(
                   controller: _userId,
                   decoration: InputDecoration(
-                    hintText: 'User ID',
+                    hintText: 'Provide Valid User ID',
                     suffixIcon: Icon(Icons.person),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
@@ -131,7 +131,7 @@ class _ResetState extends State<Reset> {
                 child: TextField(
                   controller: _mobile,
                   decoration: InputDecoration(
-                    hintText: 'Mobile',
+                    hintText: 'Provide Valid Mobile Number',
                     suffixIcon: Icon(Icons.person),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
@@ -148,7 +148,7 @@ class _ResetState extends State<Reset> {
                   controller: _password,
                   obscureText: true,
                   decoration: InputDecoration(
-                    hintText: 'Password',
+                    hintText: ' Create a New Password',
                     suffixIcon: Icon(Icons.visibility_off),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
@@ -182,7 +182,7 @@ class _ResetState extends State<Reset> {
                   },
                   child: Text.rich(
                     TextSpan(
-                        text: 'Baack to ',
+                        text: 'Back to ',
                         children: [
                           TextSpan(
                             text: 'Login',
