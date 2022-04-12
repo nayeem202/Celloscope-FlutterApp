@@ -75,6 +75,7 @@ class _LoginState extends State<Login> {
         width: width,
         child: SingleChildScrollView(
           child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

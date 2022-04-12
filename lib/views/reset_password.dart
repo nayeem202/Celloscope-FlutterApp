@@ -16,12 +16,12 @@ class Reset extends StatefulWidget {
 class _ResetState extends State<Reset> {
 
   final _http = HttpHelper();
-
+  final _formKey = GlobalKey<FormState>();
   final _userId = TextEditingController();
   final _mobile = TextEditingController();
   final _password = TextEditingController();
 
-  save() async{
+  reset() async{
     String userId = _userId.value.text;
     String mobile = _mobile.value.text;
     String password = _password.value.text;
@@ -94,112 +94,139 @@ class _ResetState extends State<Reset> {
         height: height,
         width: width,
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: width,
-                height: height*0.45,
-                child: Image.asset('assets/image/reset.png',fit: BoxFit.fill,),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('Reset Password',style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),),
-                  ],
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: width,
+                  height: height*0.45,
+                  child: Image.asset('assets/image/reset.png',fit: BoxFit.fill,),
                 ),
-              ),
-              SizedBox(height: 30.0,),
-              Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                child: TextField(
-                  controller: _userId,
-                  decoration: InputDecoration(
-                    hintText: 'Provide Valid User ID',
-                    suffixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text('Reset Password',style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 30.0,),
+                Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter User ID';
+                      }
+                      return null;
+                    },
+                    controller: _userId,
+                    decoration: InputDecoration(
+                      hintText: 'Provide Valid User ID',
+                      suffixIcon: Icon(Icons.person),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 30.0,),
-              Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                child: TextField(
-                  controller: _mobile,
-                  decoration: InputDecoration(
-                    hintText: 'Provide Valid Mobile Number',
-                    suffixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                SizedBox(height: 30.0,),
+                Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  child: TextFormField(
+
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Provide Registered Mobile Number';
+                      }
+                      return null;
+                    },
+                    controller: _mobile,
+                    decoration: InputDecoration(
+                      hintText: 'Provide Registered Mobile Number',
+                      suffixIcon: Icon(Icons.person),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                     ),
                   ),
                 ),
-              ),
 
 
-              SizedBox(height: 20.0,),
-              Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                child: TextField(
-                  controller: _password,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: ' Create a New Password',
-                    suffixIcon: Icon(Icons.visibility_off),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-              ),
-
-
-
-              SizedBox(height: 30.0,),
-              Padding(
-                padding: const EdgeInsets.only(right: 40),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    RaisedButton(
-                      child: Text('Signup'),
-                      color: Color(0xffEE7B23),
-                      onPressed: (){
-                        save();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Padding(padding: EdgeInsets.all(30.0),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+                SizedBox(height: 20.0,),
+                Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  child: TextFormField(   validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please input your new Password';
+                    }
+                    return null;
                   },
-                  child: Text.rich(
-                    TextSpan(
-                        text: 'Back to ',
-                        children: [
-                          TextSpan(
-                            text: 'Login',
-                            style: TextStyle(
-                                color: Color(0xffEE7B23)
-                            ),
-                          ),
-                        ]
+
+                    controller: _password,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: ' Create a New Password',
+                      suffixIcon: Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                     ),
                   ),
                 ),
 
-              ),
+
+
+                SizedBox(height: 30.0,),
+                Padding(
+                  padding: const EdgeInsets.only(right: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RaisedButton(
+                        child: Text('Change Password'),
+                        color: Color(0xffEE7B23),
+                        onPressed: (){
+                          if(_formKey.currentState!.validate()){
+                            reset();
+                          }
+
+
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.all(30.0),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+                    },
+                    child: Text.rich(
+                      TextSpan(
+                          text: 'Back to ',
+                          children: [
+                            TextSpan(
+                              text: 'Login',
+                              style: TextStyle(
+                                  color: Color(0xffEE7B23)
+                              ),
+                            ),
+                          ]
+                      ),
+                    ),
+                  ),
+
+                ),
 
 
 
-            ],
+              ],
+            ),
           ),
         ),
       ),
