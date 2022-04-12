@@ -34,11 +34,6 @@ class _LoginState extends State<Login> {
         Map<dynamic, dynamic> data = (jsonDecode(response.body));
         UserModel model = UserModel.fromMap(data['data']);
 
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => ProfileScreen()),
-        // );
-
         Fluttertoast.showToast(
             msg: "Login SuccessFul",
             toastLength: Toast.LENGTH_LONG,
@@ -79,117 +74,134 @@ class _LoginState extends State<Login> {
         height: height,
         width: width,
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: width,
-                height: height * 0.45,
-                child: Image.asset(
-                  'assets/image/signin.png',
-                  fit: BoxFit.fill,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: width,
+                  height: height * 0.45,
+                  child: Image.asset(
+                    'assets/image/signin.png',
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Login',
-                      style: TextStyle(
-                          fontSize: 25.0, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Login',
+                        style: TextStyle(
+                            fontSize: 25.0, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 30.0,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                child: TextField(
-                  controller: _userId,
-                  decoration: InputDecoration(
-                    hintText: 'User ID',
-                    suffixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                SizedBox(
+                  height: 30.0,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter User ID';
+                      }
+                      return null;
+                    },
+                    controller: _userId,
+                    decoration: InputDecoration(
+                      hintText: 'User ID',
+                      suffixIcon: Icon(Icons.person),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                child: TextField(
-                  controller: _password,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    suffixIcon: Icon(Icons.visibility_off),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Your Password';
+                      }
+                      return null;
+                    },
+                    controller: _password,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      suffixIcon: Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 30.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4, left: 16, right: 26),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    RaisedButton(
-                      child: Text('Login'),
-                      color: Color(0xffEE7B23),
-                      onPressed: () {
-                        login();
-                      },
-                    ),
-                  ],
+                SizedBox(
+                  height: 30.0,
                 ),
-              ),
-              SizedBox(height: 20.0),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Reset()));
-                },
-                child: Text.rich(
-                  TextSpan(text: 'Forget Password ? ', children: [
-                    TextSpan(
-                      text: ' Click Here',
-                      style: TextStyle(color: Color(0xffEE7B23)),
-                    ),
-                  ]),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4, left: 16, right: 26),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RaisedButton(
+                        child: Text('Login'),
+                        color: Color(0xffEE7B23),
+                        onPressed: () {
+                          if(_formKey.currentState!.validate()){
+                            login();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-
-
-
-
-              SizedBox(height: 40.0),
-              GestureDetector(
-               onTap: () {
-               Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Signup()));
-             },
-                child: Text.rich(
-                  TextSpan(text: 'Don\'t have an account ? ', children: [
-                    TextSpan(
-                      text: 'Signup',
-                      style: TextStyle(color: Color(0xffEE7B23)),
-                    ),
-                  ]),
+                SizedBox(height: 20.0),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Reset()));
+                  },
+                  child: Text.rich(
+                    TextSpan(text: 'Forget Password ? ', children: [
+                      TextSpan(
+                        text: ' Click Here',
+                        style: TextStyle(color: Color(0xffEE7B23)),
+                      ),
+                    ]),
+                  ),
                 ),
-              ),
 
-            ],
+
+
+
+                SizedBox(height: 40.0),
+                GestureDetector(
+                 onTap: () {
+                 Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Signup()));
+               },
+                  child: Text.rich(
+                    TextSpan(text: 'Don\'t have an account ? ', children: [
+                      TextSpan(
+                        text: 'Signup',
+                        style: TextStyle(color: Color(0xffEE7B23)),
+                      ),
+                    ]),
+                  ),
+                ),
+
+              ],
+            ),
           ),
         ),
       ),
